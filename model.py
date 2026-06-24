@@ -21,7 +21,7 @@ def build_token_to_id_vocab(sentences, specials=('<pad>', '<bos>', '<eos>', '<un
             Defaults to ('<pad>', '<bos>', '<eos>', '<unk>').
 
     Returns:
-        dict: A token-to-id dictionary (where `ttid` stands for 'token to id').
+        dict: A token-to-id dictionary.
     """
     token_to_id = {}
     for token in specials:
