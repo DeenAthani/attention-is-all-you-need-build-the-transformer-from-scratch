@@ -23,29 +23,40 @@ def build_token_to_id_vocab(sentences, specials=('<pad>', '<bos>', '<eos>', '<un
     Returns:
         dict: A token-to-id dictionary (where `ttid` stands for 'token to id').
     """
-    ttid_dict = {}
+    token_to_id = {}
     for token in specials:
-        ttid_dict[token] = len(ttid_dict)
+        token_to_id[token] = len(token_to_id)
     for sentence in sentences:
         for token in sentence.split():
-            if token not in ttid_dict:
-                ttid_dict[token] = len(ttid_dict)
-    return ttid_dict
+            if token not in token_to_id:
+                token_to_id[token] = len(token_to_id)
+    return token_to_id
 
-# Step 2 - build_id_to_token_vocab (not yet solved)
-# TODO: implement
+# Step 2 - build_id_to_token_vocab
+def build_id_to_token_vocab(token_to_id):
+    return {idx: token for token, idx in token_to_id.items()}
 
-# Step 3 - encode_sentence_to_ids (not yet solved)
-# TODO: implement
+# Step 3 - encode_sentence_to_ids
+def encode_sentence_to_ids(sentence, token_to_id, unk_token='<unk>'):
+    unk_id = token_to_id[unk_token]
+    return [token_to_id.get(tok, unk_id) for tok in sentence.split()]
 
-# Step 4 - decode_ids_to_tokens (not yet solved)
-# TODO: implement
+# Step 4 - decode_ids_to_tokens
+def decode_ids_to_tokens(ids, id_to_token):
+    return [id_to_token[i] for i in ids]
 
-# Step 5 - pad_id_sequence (not yet solved)
-# TODO: implement
+# Step 5 - pad_id_sequence
+def pad_id_sequence(ids, max_len, pad_id):
+    if len(ids) >= max_len:
+        return ids[:max_len]
+    return ids + [pad_id] * (max_len - len(ids))
 
-# Step 6 - stack_padded_sequences_to_batch (not yet solved)
-# TODO: implement
+# Step 6 - stack_padded_sequences_to_batch
+import torch
+
+def stack_padded_sequences_to_batch(padded_sequences):
+    """Stack a list of equal-length padded id sequences into a 2D LongTensor batch."""
+    return torch.tensor(padded_sequences, dtype=torch.long)
 
 # Step 7 - scale_embeddings_by_sqrt_d_model (not yet solved)
 # TODO: implement
