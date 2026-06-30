@@ -21,7 +21,7 @@ def build_token_to_id_vocab(sentences, specials=('<pad>', '<bos>', '<eos>', '<un
             Defaults to ('<pad>', '<bos>', '<eos>', '<unk>').
 
     Returns:
-        dict: A token-to-id dictionary.
+        dict: A token-to-id dictionary (where `ttid` stands for 'token to id').
     """
     token_to_id = {}
     for token in specials:
@@ -39,7 +39,7 @@ def build_id_to_token_vocab(token_to_id):
 # Step 3 - encode_sentence_to_ids
 def encode_sentence_to_ids(sentence, token_to_id, unk_token='<unk>'):
     unk_id = token_to_id[unk_token]
-    return [token_to_id.get(tok, unk_id) for tok in sentence.split()]
+    return [token_to_id.get(token, unk_id) for token in sentence.split()]
 
 # Step 4 - decode_ids_to_tokens
 def decode_ids_to_tokens(ids, id_to_token):
