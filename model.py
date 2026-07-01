@@ -159,7 +159,7 @@ def mask_attention_scores_with_neg_inf(scores, mask):
 import torch
 
 def softmax_attention_weights(masked_scores):
-    weights = F.softmax(masked_scores, dim=-1)
+    weights = torch.softmax(masked_scores, dim=-1)
     all_masked = ~torch.isfinite(masked_scores).any(dim=-1, keepdim=True)
     weights = weights.masked_fill(all_masked, 0.0)
     return weights
