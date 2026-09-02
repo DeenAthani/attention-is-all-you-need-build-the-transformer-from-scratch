@@ -206,8 +206,20 @@ def merge_heads_back_to_model_dim(multi_head_tensor):
     B, H, L, d_k = multi_head_tensor.shape
     return multi_head_tensor.transpose(1, 2).contiguous().view(B, L, H * d_k)
 
-# Step 26 - apply_linear_projection (not yet solved)
-# TODO: implement
+# Step 26 - apply_linear_projection
+def apply_linear_projection(x, weight, bias):
+    """
+    y = x @ W^T + b for x of shape (..., in_features)
+
+    weight: (out_features, in_features) — nn.Linear storage convention.
+    bias: (out_features,) or None.
+    output: (..., out_features); matmul broadcasts over all leading dimensions and 
+    the bias broadcasts onto the last axis.
+    """
+    out = torch.matmul(x, weight.transpose(-1, -2))
+    if bias is not None:
+        out = out + bias
+    return out
 
 # Step 27 - project_to_query_key_value (not yet solved)
 # TODO: implement
